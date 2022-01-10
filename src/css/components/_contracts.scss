@@ -1,0 +1,63 @@
+.hubble-product__options .s-partner-icon {
+  display: none !important;
+}
+
+.contract_copy {
+  padding-left: 10px;
+  padding-bottom: 15px;
+}
+.contracts_container {
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  text-align: center;
+  color: #000;
+  flex-wrap: wrap;
+  .contracts_block {
+    border: 1px solid rgba(128, 128, 128, 0.514);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+  }
+  .contracts_block:hover {
+    border-color: black;
+    cursor: pointer;
+  }
+  img {
+    margin: 8px 0;
+    max-width: 50px;
+    max-height: 50px;
+    -o-object-fit: contain;
+    object-fit: contain;
+  }
+  .contracts_selector {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    width: 160px;
+    justify-content: space-around;
+    align-items: center;
+    @media only screen and (max-width: 500px) {
+      width: 100%;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    display: inline;
+  }
+}
+.contracts_container::after {
+  content: '';
+  padding-left: 10px;
+  padding-top: 10px;
+  position: absolute;
+  bottom: 20px;
+}
+
+#offer_tariff
+  > div.hubble-product__options-content-inner
+  > div
+  > div:nth-child(2)
+  > div
+  > img {
+  margin: 11px 0;
+}

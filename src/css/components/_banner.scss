@@ -1,0 +1,16 @@
+.boilerplate {
+        width: 100vw;
+    &__container {
+        padding: 2%;
+        width: 100%;
+        @include centerflex;
+    }
+    &__content {
+        background: white;
+    }
+    &__title {
+        font-size: 2em;
+        font-family: $primary-font;
+        color: $samsung-blue;
+    }
+}
