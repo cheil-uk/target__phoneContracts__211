@@ -1,7 +1,9 @@
 import axios from 'axios'
+
 import { forEach } from 'lodash';
 
 export default class Contracts {
+
   async phoneContracts() {
   let sku = '';
   const pathName = window.location.pathname;
@@ -84,8 +86,10 @@ export default class Contracts {
   container.classList.add('contracts_container');
   const offerSection = document.querySelector("#offer_tariff > div.hubble-product__options-content-inner");
   const path = window.location.pathname;
+  const sliderBlock       = document.createElement('div');
+  const dots  = document.createElement('div');
 
-  carriers.map((carrier) => {
+  carriers.map((carrier, index) => {
     // console.log(carrier)
     const contractImg       = carrier.additionalCarrierInfo.medias[0].url;
     const contractImgAlt    = carrier.additionalCarrierInfo.medias[0].altText;
@@ -115,6 +119,19 @@ export default class Contracts {
     document.querySelector("#offer_tariff > div.hubble-product__options-content-cta > a").style.display = 'none'
   });
 
+    sliderBlock.classList.add('contracts_slider');
+    dots.innerHTML = `<a class="prev">❮</a>
+                      <a class="next">❯</a>`
+    sliderBlock.innerHTML = `
+      <div style="text-align:center">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      `
+    container.append(dots)
+    container.append(sliderBlock);
+
     (path == '/uk/smartphones/galaxy-z-fold3-5g/buy/') ? container.after('RPI/CPI changes apply****') : container.after('RPI/CPI changes apply***');
 
     const allBlocks = document.querySelectorAll('.contracts_block');
@@ -124,8 +141,42 @@ export default class Contracts {
       document.querySelector("#offer_tariff > div.hubble-product__options-content-cta > a").click();
       e.preventDefault();
       this.goToCarrier(blockId)
-    }
+      }
     })
+
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function showSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n){
+      let i
+      let slides = document.getElementsByClassName('contracts_block');
+      let dots = document.getElementsByClassName("dot");
+      if (n > slides.length) {slideIndex = 1}
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1 ].className += " active";
+    }
+
+    document.querySelector('.prev').onclick = () => {
+      showSlides(-1);
+    }
+    document.querySelector('.next').onclick = () => {
+      showSlides(1);
+    }
   }
 
 }
