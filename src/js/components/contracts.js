@@ -82,12 +82,12 @@ export default class Contracts {
   contractCopy.classList.add('contract_copy');
   contractCopy.innerHTML = `<span class="s-option-default">Choose a network and a bundle of minutes, texts and data to buy with your phone</span>`
   //loop through all contracts
-  const container = document.createElement('div');
+  const container       = document.createElement('div');
   container.classList.add('contracts_container');
-  const offerSection = document.querySelector("#offer_tariff > div.hubble-product__options-content-inner");
-  const path = window.location.pathname;
-  const sliderBlock       = document.createElement('div');
-  const dots  = document.createElement('div');
+  const offerSection    = document.querySelector("#offer_tariff > div.hubble-product__options-content-inner");
+  const path            = window.location.pathname;
+  const dotsContainer   = document.createElement('div');
+  dotsContainer.classList.add('dots_container');
 
   carriers.map((carrier, index) => {
     // console.log(carrier)
@@ -96,8 +96,11 @@ export default class Contracts {
     const minPrice          = this.getLowPrice(carrier.tariffPlans);
     const network           = carrier.id
     const block             = document.createElement('div');
+    const dots              = document.createElement('span');
     const ticketNum         = 733;
 
+    dots.classList.add('dot');
+    dotsContainer.append(dots);
     block.classList.add('contracts_block');
 
     this.tagging(block,
@@ -116,21 +119,11 @@ export default class Contracts {
     `
     container.append(block);
     offerSection.append(container);
+    container.append(dotsContainer);
     document.querySelector("#offer_tariff > div.hubble-product__options-content-cta > a").style.display = 'none'
   });
 
-    sliderBlock.classList.add('contracts_slider');
-    dots.innerHTML = `<a class="prev">❮</a>
-                      <a class="next">❯</a>`
-    sliderBlock.innerHTML = `
-      <div style="text-align:center">
-        <span class="dot"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
-      `
-    container.append(dots)
-    container.append(sliderBlock);
+
 
     (path == '/uk/smartphones/galaxy-z-fold3-5g/buy/') ? container.after('RPI/CPI changes apply****') : container.after('RPI/CPI changes apply***');
 
@@ -143,40 +136,6 @@ export default class Contracts {
       this.goToCarrier(blockId)
       }
     })
-
-    let slideIndex = 1;
-    showSlides(slideIndex);
-
-    function showSlides(n) {
-      showSlides(slideIndex += n);
-    }
-
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-
-    function showSlides(n){
-      let i
-      let slides = document.getElementsByClassName('contracts_block');
-      let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) {slideIndex = 1}
-        for (i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";
-        }
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-      }
-
-      slides[slideIndex - 1].style.display = "block";
-      dots[slideIndex - 1 ].className += " active";
-    }
-
-    document.querySelector('.prev').onclick = () => {
-      showSlides(-1);
-    }
-    document.querySelector('.next').onclick = () => {
-      showSlides(1);
-    }
   }
 
 }
