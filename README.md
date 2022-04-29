@@ -17,3 +17,4 @@ Use additional QA parameters of Adobe Target (see above)
 Such as: https://www.samsung.com/ie/smartphones/all-smartphones/?galaxy-s+galaxy-z&at_preview_token=mCC5Cr9vqdC4qmcTlXfiQXXoF8PgTBKc0I00Y3g6O2U%3D&at_preview_index=1_1&at_preview_listed_activities_only=true
 
 # target_boilerplate
+# target__phoneContracts__211
