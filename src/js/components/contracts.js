@@ -97,7 +97,7 @@ export default class Contracts {
     const network           = carrier.id
     const block             = document.createElement('div');
     const dots              = document.createElement('span');
-    const ticketNum         = 733;
+    const ticketNum         = 211;
 
     dots.classList.add('dot');
     dotsContainer.append(dots);
@@ -128,14 +128,72 @@ export default class Contracts {
     (path == '/uk/smartphones/galaxy-z-fold3-5g/buy/') ? container.after('RPI/CPI changes apply****') : container.after('RPI/CPI changes apply***');
 
     const allBlocks = document.querySelectorAll('.contracts_block');
+    const allDotIndicators = document.querySelectorAll('.dot');
 
-    allBlocks.forEach((allBlock, blockId) => {
-      allBlock.onclick = (e) => {
-      document.querySelector("#offer_tariff > div.hubble-product__options-content-cta > a").click();
-      e.preventDefault();
-      this.goToCarrier(blockId)
+    //This function is made so the inicators change when you scroll blocks into viewport
+
+    function isElementInViewport (el) {
+        // Special bonus for those using jQuery
+        if (typeof jQuery === "function" && el instanceof jQuery) {
+            el = el[0];
+        }
+
+        var rect = el.getBoundingClientRect();
+
+
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /* or $(window).height() */
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+        );
+    }
+
+
+    allBlocks.forEach((carrierBlock, blockId) => {
+
+      const carrrierBlockPosisition = carrierBlock.getBoundingClientRect().left;
+      const carousalContainer = document.querySelector("#offer_tariff > div.hubble-product__options-content-inner > div")
+
+      carousalContainer.addEventListener('scroll', function(e) {
+
+        if (isElementInViewport(carrierBlock)) {
+          allDotIndicators[blockId].classList.add('active');
+          } else {
+            allDotIndicators[blockId].classList.remove('active');
+          }
+        })
+
+      carrierBlock.onclick = (e) => {
+        document.querySelector("#offer_tariff > div.hubble-product__options-content-cta > a").click();
+        e.preventDefault();
+        this.goToCarrier(blockId)
+      }
+
+      allDotIndicators[blockId].onclick = (e) => {
+
+          if (blockId <  3 ) {
+            carousalContainer.scroll({
+            left: carrrierBlockPosisition - 100,
+            behavior: 'smooth'
+          });
+        } else if (blockId < 3 && innerWidth >= 320) {
+          carousalContainer.scroll({
+            left: carrrierBlockPosisition - 160,
+            behavior: 'smooth'
+          });
+        } else {
+            carousalContainer.scroll({
+            left: carrrierBlockPosisition,
+            behavior: 'smooth'
+          });
+        }
       }
     })
+
+
+
+
   }
 
 }
